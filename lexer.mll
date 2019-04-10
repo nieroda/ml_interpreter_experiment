@@ -2,7 +2,7 @@
 open Parser
 }
 
-let white = [' ' '\t']+
+let white = [' ' '\t' '\n']+
 let digit = ['0'-'9']
 let int = '-'? digit+
 let letter = ['a'-'z' 'A'-'Z']
@@ -18,10 +18,15 @@ rule read =
   | "-" { SUB }
   | "/" { DIV }
   | "%" { MOD }
+  | ";" { END }
   | "var" { VAR }
-  | "=" { EQUALS }
+  | "=" { ASSIGN }
+  | "==" { EQUALITY }
   | "if" { IF }
   | "then" { THEN }
+  | "(" { LPAREN }
+  | ")" { RPAREN }
+  | "print" { PRINT }
   | id { ID (Lexing.lexeme lexbuf) }
   | int { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | eof { EOF }
