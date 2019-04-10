@@ -1,6 +1,6 @@
 
 
-type = bop
+type bop = 
     | Add
     | Sub
     | Mul

@@ -1,6 +1,6 @@
 %{
 open Ast
-}%
+%}
 
 %token <int> INT 
 %token <string> ID
@@ -14,6 +14,7 @@ open Ast
 %token VAR
 %token EQUALS
 %token IF
+%token THEN
 %token EOF 
 
 %left MUL
@@ -22,23 +23,25 @@ open Ast
 %left DIV 
 %left MOD
 
-%start <Ast.expr> prog 
-%% 
+%start prog 
+%type <Ast.expr> prog 
+%%
+
+
 
 prog:
-    | e = expr; EOF { e }
-    ;
+    expr; EOF { $1 };
 
 expr:
-    | i = INT { Int i }
-    | x = ID { Var x }
+    | INT { Int $1 }
+    | ID { Var $1 }
     | TRUE { Bool true }
     | FALSE { Bool false }
-    | e1 = expr; MUL; e2 = expr { BinaryOp(e1, Mul, e2) }
-    | e1 = expr; ADD; e2 = expr { BinaryOp(e1, Add, e2) }
-    | e1 = expr; SUB; e2 = expr { BinaryOp(e1, Sub, e2) }
-    | e1 = expr; DIV; e2 = expr { BinaryOp(e1, Div, e2) }
-    | e1 = expr; MOD; e2 = expr { BinaryOp(e1, Mod, e2) }
-    | VAR; x = ID; EQUALS; e1 = expr { Val(x, e1) }
-    | IF; e1 = expr; THEN; e2 = expr { If(e1, e2) }
+    | expr; MUL; expr { BinaryOp($1, Mul, $3) }
+    | expr; ADD; expr { BinaryOp($1, Add, $3) }
+    | expr; SUB; expr { BinaryOp($1, Sub, $3) }
+    | expr; DIV; expr { BinaryOp($1, Div, $3) }
+    | expr; MOD; expr { BinaryOp($1, Mod, $3) }
+    | VAR; ID; EQUALS; expr { Val($2, $4) }
+    | IF; expr; THEN; expr { If($2, $4) }
     ;

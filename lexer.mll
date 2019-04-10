@@ -21,6 +21,7 @@ rule read =
   | "var" { VAR }
   | "=" { EQUALS }
   | "if" { IF }
+  | "then" { THEN }
   | id { ID (Lexing.lexeme lexbuf) }
   | int { INT (int_of_string (Lexing.lexeme lexbuf)) }
   | eof { EOF }
