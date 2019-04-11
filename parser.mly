@@ -35,22 +35,20 @@ open Ast
 
 
 prog:
-    | expr; prog; { Ast($1, $2) }
+    /* | expr; prog; { Ast($1, $2) } */
     | expr; EOF { $1 };
-
-
 
 expr:
     | INT;    { Int $1 }
     | ID;     { Var $1 }
     | TRUE;   { Bool true }
     | FALSE;  { Bool false }
-    | PRINT; expr { Print($2) }
+    /* | PRINT; expr { Print($2) } */
     | expr; MUL; expr { BinaryOp($1, Mul, $3) }
     | expr; ADD; expr { BinaryOp($1, Add, $3) }
     | expr; SUB; expr { BinaryOp($1, Sub, $3) }
     | expr; DIV; expr { BinaryOp($1, Div, $3) }
     | expr; MOD; expr { BinaryOp($1, Mod, $3) }
-    | VAR; ID; ASSIGN; expr; END; { Val($2, $4) }
+    /* | VAR; ID; ASSIGN; expr; END; { Val($2, $4) } */
     /* | IF; LPAREN; expr; RPAREN; expr; END; { If($3, $5) } */
  

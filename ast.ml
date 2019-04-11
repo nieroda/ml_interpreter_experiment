@@ -10,7 +10,7 @@ type expr =
     | Int of int 
     | Bool of bool 
     | BinaryOp of expr * bop * expr 
-    | If of expr * expr
+    (* | If of expr * expr
     | Val of string * expr 
     | Ast of expr * expr
-    | Print of expr
+    | Print of expr *)
